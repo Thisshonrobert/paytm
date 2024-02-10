@@ -9,11 +9,6 @@ const userData = new Schema({
         lowercase:true,
         uppercase:true
     },
-    password:{
-        type:String,
-        required:true,
-        minlength:6
-    },
     firstName:{
         type:String,
         required:true,
@@ -25,7 +20,12 @@ const userData = new Schema({
         required:true,
         lowercase:true,
         uppercase:true
-    }
+    },
+    password:{
+        type:String,
+        required:true,
+        minlength:6
+    },
 })
 
 const User = data.model('patym',userData);
