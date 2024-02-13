@@ -7,16 +7,36 @@ const obj = zod.object({
     password:zod.string().min(6)
 })
 
+const updateobj = zod.object({
+    password:zod.string().optional(),
+    firstname:zod.string().optional(),
+    lastnamename:zod.string().optional()
+})
+
 
 const validateUser = (req,res,next) => {
-    try{
-        obj.safeParse(req.body);
+
+        const {success} = obj.safeParse(req.body);
+        if(!success){
+           return  res.status(422).json({
+                msg:"Email already taken / Incorrect inputs"
+            })
+        }
         next();
-    }
-    catch(e){
-        res.status(401).json({
-            msg:e.message
+}
+
+const updateUser = (req,res,next) =>{
+    const {success} = updateobj.safeParse(req.body);
+    if(!success){
+        return res.status(422).json({
+            msg:"Error while updating information"
         })
     }
+    next();
 }
-module.exports={validateUser};
+
+
+module.exports={
+    validateUser,
+    updateUser
+};

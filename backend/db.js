@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const { Schema } = require('zod');
 
 mongoose.connect("mongodb+srv://thisshonrobert:9g4V501my5XYW0G1@cluster0.ewmaqqe.mongodb.net/")
 
-const userData = new Schema({
+const userDataSchema = new Schema({
     username:{
         type:String,
         required:true,
@@ -28,5 +29,19 @@ const userData = new Schema({
     },
 })
 
-const User = data.model('patym',userData);
-module.exports=User;
+const balanceSchema = new Schema({
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        minlength:12,
+        required:true,
+    },
+	balance: Number
+})
+
+const User = mongoose.model('User',userDataSchema);
+const Account = mongoose.model('Accounts',balanceSchema);
+module.exports={
+    User,
+    Account
+};

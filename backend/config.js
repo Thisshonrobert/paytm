@@ -1,3 +1,4 @@
-const PASSWORD = '12345';
 
-module.exports=PASSWORD
+module.exports={
+    PASSWORD  : '12345'
+}
