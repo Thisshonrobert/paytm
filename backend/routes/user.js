@@ -21,7 +21,7 @@ userRouter.post('/signup',validateUser,async(req,res)=>{
             username:username
         })
         
-        if(existingUser){
+        if(existingUser._id){
             return res.status(411).json({
                 msg:"username already taken / Incorrect inputs"
             })
@@ -81,9 +81,9 @@ userRouter.post('/signin',validateUser, async(req, res) => {
 
 });
 
-userRouter.post('/',authMiddleware,updateUser,async(req,res)=>{
+userRouter.put('/',authMiddleware,updateUser,async(req,res)=>{
     await User.updateOne(req.body,{
-        _id:req.userId
+        id:req.userId
     })
     res.json({
         message: "Updated successfully"
@@ -101,7 +101,7 @@ userRouter.get('/bulk',async(req,res)=>{
                 lastname:{
                     $regex:filter
                 }
-        }]
+                }]
         })
         res.status(200).json({
             user: filterUser.map(user => ({
