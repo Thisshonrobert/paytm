@@ -16,7 +16,7 @@ const updateobj = zod.object({
 
 const validateUser = (req,res,next) => {
 
-        const {success} = obj.safeParse(req.body);
+        const {success} = obj.parse(req.body);
         if(!success){
            return  res.status(422).json({
                 msg:"Email already taken / Incorrect inputs"
