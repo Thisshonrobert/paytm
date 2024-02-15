@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema } = require('zod');
-
+const { Schema } = mongoose;
 mongoose.connect("mongodb+srv://thisshonrobert:9g4V501my5XYW0G1@cluster0.ewmaqqe.mongodb.net/")
 
 const userDataSchema = new Schema({

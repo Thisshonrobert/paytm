@@ -1,7 +1,7 @@
 const {PASSWORD} = require("./config");
 const jwt = require("jsonwebtoken");
 
-export function authMiddleware(req,res,next){
+function authMiddleware(req,res,next){
     const header = req.header.authorization;
     if(!header || header.startsWith("Bearer")){
         return res.status(403).json({})
