@@ -1,4 +1,4 @@
-const {PASSWORD} = require("./config");
+const PASSWORD = "kitty";
 const jwt = require("jsonwebtoken");
 
 function authMiddleware(req,res,next){

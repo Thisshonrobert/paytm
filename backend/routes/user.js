@@ -65,6 +65,11 @@ userRouter.post('/signin',validateUser, async(req, res) => {
                     token:token
                 })
         }
+        else{
+            return res.json({
+                msg:"user does not exist"
+            })
+        }
     } catch (error) {
         res.json({
             msg:"Error while logging in"
@@ -82,33 +87,29 @@ userRouter.put('/',authMiddleware,updateUser,async(req,res)=>{
     })
 })
 
-userRouter.get('/bulk',async(req,res)=>{
+userRouter.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
-    try {
-        const filterUser = await find({
-            $or:[{
-                firstName:{
-                    $regex:filter
-                },
-                lastName:{
-                    $regex:filter
-                }
-                }]
-        })
-        res.status(200).json({
-            user: filterUser.map(user => ({
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                _id: user._id
-            }))
-        })
 
-    } catch (error) {
-        res.status(404).json({
-            message:"user not found"
-        })
-    }
+    const users = await User.find({
+        $or: [{
+            firstName: {
+                "$regex": filter
+            }
+        }, {
+            lastName: {
+                "$regex": filter
+            }
+        }]
+    })
+
+    res.status(200).json({
+        user: users.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
+    })
 })
 
 module.exports = userRouter;
