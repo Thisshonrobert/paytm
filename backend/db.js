@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-mongoose.connect("mongodb+srv://thisshonrobert:9g4V501my5XYW0G1@cluster0.ewmaqqe.mongodb.net/")
+mongoose.connect("mongodb+srv://thisshonrobert:9g4V501my5XYW0G1@cluster0.ewmaqqe.mongodb.net/paytm")
 
-const userDataSchema = new Schema({
+const userDataSchema = new mongoose.Schema({
     username:{
         type:String,
         required:true,
@@ -28,7 +27,7 @@ const userDataSchema = new Schema({
     },
 })
 
-const balanceSchema = new Schema({
+const balanceSchema = new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',

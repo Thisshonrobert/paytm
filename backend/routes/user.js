@@ -5,31 +5,30 @@ const {User}= require("../db");
 const {Account} = require("../db");
 const userRouter =  express.Router();
 const jwt = require('jsonwebtoken');
-const PASSWORD = require('../config');
+const PASSWORD = "kitty";
 const { authMiddleware } = require('../middleware');
 
 
 
 userRouter.post('/signup',validateUser,async(req,res)=>{
     const username = req.body.username;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const password = req.body.password;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
 
-    try{
-        const existingUser =  await User.find({
+        const existingUser =  await User.findOne({
             username:username
         })
         
-        if(existingUser._id){
+        if(existingUser){
             return res.status(411).json({
                 msg:"username already taken / Incorrect inputs"
             })
         }
             const user =await User.create({
                 username,
-                firstname,
-                lastname,
+                firstName,
+                lastName,
                 password,
             })
             const userId = user._id;
@@ -38,36 +37,29 @@ userRouter.post('/signup',validateUser,async(req,res)=>{
                 balance:  Math.floor(Math.random() * (1000 - 1 + 1) + 1)
             })
             if(user){
-                const token = jwt.sign(userId,PASSWORD)
+                const token = jwt.sign({userId},PASSWORD)
                 res.status(200).json({
                     msg:"user Created successfully",
                     token:token
                 })
             }
-        
-        
-    }catch(e){
-        res.status(411).json({
-            msg:"username already taken / Incorrect inputs"
-        })
-    }
 });
 
 userRouter.post('/signin',validateUser, async(req, res) => {
     const username = req.body.username;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const password = req.body.password;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
     try {
        const user =  await User.findOne({
         username,
-        firstname,
-        lastname,
+        firstName,
+        lastName,
         password
         })
         const userId = user._id;
         if(user){
-            const token = jwt.sign(userId,PASSWORD)
+            const token = jwt.sign({userId},PASSWORD)
                 res.status(200).json({
                     msg:userId,
                     token:token
@@ -95,10 +87,10 @@ userRouter.get('/bulk',async(req,res)=>{
     try {
         const filterUser = await find({
             $or:[{
-                firstname:{
+                firstName:{
                     $regex:filter
                 },
-                lastname:{
+                lastName:{
                     $regex:filter
                 }
                 }]
