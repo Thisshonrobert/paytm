@@ -11,7 +11,7 @@ accountRouter.get('/balance',authMiddleware,async(req,res)=>{
     })
 })
 
-accountRouter.post('/tranfer',authMiddleware,async(req,res)=>{
+accountRouter.post('/transfer',authMiddleware,async(req,res)=>{
     const session = await mongoose.startSession();
     const account = await Account.findOne({ userId: req.userId }).session(session);
     const {amount,to} = req.body;
@@ -29,8 +29,8 @@ accountRouter.post('/tranfer',authMiddleware,async(req,res)=>{
             message:"Invalid user"
         })
     }
-    await Account.findByIdAndUpdate({ userId: req.userId },{ $inc: { balance: -amount } }).session(session);    
-    await Account.findByIdAndUpdate({ userId: to }, { $inc: { balance: amount } }).session(session);
+    await Account.updateOne({ userId: req.userId },{ $inc: { balance: -amount } }).session(session);    
+    await Account.updateOne({ userId: to }, { $inc: { balance: amount } }).session(session);
     await session.commitTransaction();
     res.json({
         message: "Transfer successful"

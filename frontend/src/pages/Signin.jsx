@@ -16,7 +16,7 @@ export const Signin = ()=>{
             <InputBox label={"Email"} placeholder={"thisshon@gmail.com"}/>
             <InputBox label={"Password"} placeholder={"12234"}/>
             <ButtonComponent buttonname={"Sign in"} onClick={()=>{}}/>
-            <ButtonWarning text={"Don't have an account? "} buttonText={"Sign Up"}  to={"/signnup"}/>
+            <ButtonWarning text={"Don't have an account? "} buttonText={"Sign Up"}  to={"/signup"}/>
         </div>
        </div>
     </div>)
