@@ -1,4 +1,4 @@
-export const Appbar = () => {
+export const Appbar = ({onClick}) => {
     return <div className="border-black text-white h-14 flex justify-between bg-blue-500">
         <div className="flex flex-col justify-center h-full ml-4  text-lg font-normal">
             PayTM App
@@ -12,6 +12,9 @@ export const Appbar = () => {
                     U
                 </div>
             </div>
+           
+                <button  className="text-lg  ml-2 p-2 cursor-pointer border border-2 border-solid border-indigo-100 rounded" onClick={onClick}>Logout</button>
+        
         </div>
     </div>
 }

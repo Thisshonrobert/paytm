@@ -4,8 +4,8 @@ import axios from "axios";
 import _debounce from 'lodash/debounce';
 import { useNavigate } from "react-router-dom";
 
-export const Users = () => {
-    // Replace with backend call
+export const Users = ({currentUserId}) => {
+    
     const [users, setUsers] = useState([]);
     const [filter,setFilter] = useState("");
    
@@ -19,7 +19,7 @@ export const Users = () => {
         setUsers(respone.data.user);
      })
     },[filter])
-
+    console.log(currentUserId)
     return <>
         <div className="font-bold mt-6 text-lg">
             Users
@@ -29,7 +29,10 @@ export const Users = () => {
             type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
         </div>
         <div>
-            {users.map(user => <User user={user} />)}
+        {users.map(user => (
+    user._id !== currentUserId &&
+    <User key={user._id} user={user} />
+        ))}
         </div>
     </>
 }
