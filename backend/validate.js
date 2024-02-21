@@ -22,8 +22,11 @@ const validateUser = (req,res,next) => {
                 msg:"Email already taken / Incorrect inputs"
             })
         }
-        next();
-}
+        else{
+            next();
+        }
+        }
+       
 
 const updateUser = (req,res,next) =>{
     const {success} = updateobj.safeParse(req.body);

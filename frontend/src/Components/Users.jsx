@@ -19,7 +19,7 @@ export const Users = ({currentUserId}) => {
         setUsers(respone.data.user);
      })
     },[filter])
-    console.log(currentUserId)
+    
     return <>
         <div className="font-bold mt-6 text-lg">
             Users

@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 function authMiddleware(req,res,next){
     const header = req.headers.authorization;
     if(!header || !header.startsWith("Bearer")){
-        return res.status(403).json({})
+        return res.status(403).json({
+            message: "Missing authorization"
+        })
     }
     const token = header.split(" ")[1];
     try {
